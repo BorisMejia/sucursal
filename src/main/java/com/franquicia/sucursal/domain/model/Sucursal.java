@@ -5,13 +5,14 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
+import java.util.UUID;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class Sucursal {
 
-    private Integer id;
+    private String id = UUID.randomUUID().toString();
     private String nombreSucursal;
     private List<Producto> productos;
 }

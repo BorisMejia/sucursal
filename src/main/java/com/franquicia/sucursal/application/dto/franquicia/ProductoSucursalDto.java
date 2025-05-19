@@ -1,9 +1,5 @@
 package com.franquicia.sucursal.application.dto.franquicia;
 
-public record ProductoSucursalDto(
-        String idProducto,
-        String nombreProducto,
-        Integer stock,
-        String idSucursal,
-        String nombreSucursal
-) {}
+import com.franquicia.sucursal.domain.model.Producto;
+
+public record ProductoSucursalDto(String idProducto, Producto producto) {}

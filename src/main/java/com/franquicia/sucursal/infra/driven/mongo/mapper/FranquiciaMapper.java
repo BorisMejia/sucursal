@@ -7,11 +7,13 @@ import com.franquicia.sucursal.infra.driven.mongo.entity.FranquiciaDocument;
 import com.franquicia.sucursal.infra.driven.mongo.entity.ProductoDocument;
 import com.franquicia.sucursal.infra.driven.mongo.entity.SucursalDocument;
 import org.mapstruct.Mapper;
+import org.mapstruct.factory.Mappers;
 
 import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface FranquiciaMapper {
+    FranquiciaMapper INSTANCE = Mappers.getMapper(FranquiciaMapper.class);
 
     FranquiciaDocument toDocument(Franquicia franquicia);
     Franquicia toDomain(FranquiciaDocument franquiciaDocument);

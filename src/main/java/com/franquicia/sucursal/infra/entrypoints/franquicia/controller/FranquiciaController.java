@@ -15,6 +15,11 @@ public class FranquiciaController {
 
     private final FranquiciaService franquiciaService;
 
+    @GetMapping("/")
+    public Mono<String> ping(){
+        return Mono.just("Conectado...");
+    }
+
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Mono<Franquicia> crearFranquicia(@RequestBody Franquicia franquicia){

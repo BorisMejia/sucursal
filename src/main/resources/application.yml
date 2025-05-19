@@ -1,0 +1,19 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: franquicia-api
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/franquicia-db
+  main:
+    web-application-type: reactive
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui/index.html
+    enabled: true
+

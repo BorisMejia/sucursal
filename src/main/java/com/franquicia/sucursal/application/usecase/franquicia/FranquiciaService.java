@@ -13,7 +13,7 @@ public interface FranquiciaService {
 
     Mono<Franquicia> agregarSucursal(String idFranquicia, Sucursal sucursal);
 
-    Mono<Franquicia> agregarProducto(String idFranquicia, Producto producto);
+    Mono<Franquicia> agregarProducto(String idFranquicia, String idSucursal, Producto producto);
     Mono<Franquicia> eliminarProducto(String idFranquicia,String idSucursal, String idProducto);
 
     Mono<Franquicia> modificarStockProducto(String idFranquicia, String idSucursal, String idProducto, Integer newStock);

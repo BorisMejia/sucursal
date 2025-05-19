@@ -18,17 +18,27 @@ public class FranquiciaServiceImpl implements FranquiciaService {
     private final FranquiciaRepository franquiciaRepository;
     @Override
     public Mono<Franquicia> crearFranquicia(Franquicia franquicia) {
-        return null;
+        return franquiciaRepository.guardarFranquicia(franquicia);
     }
 
     @Override
     public Mono<Franquicia> agregarSucursal(String idFranquicia, Sucursal sucursal) {
-        return null;
+        return franquiciaRepository.buscarFranquiciaById(idFranquicia)
+                .map(franquicia -> {
+                    franquicia.getSucursales().add(sucursal);
+                    return franquicia;
+                })
+                .flatMap(franquiciaRepository::guardarFranquicia);
     }
 
     @Override
-    public Mono<Franquicia> agregarProducto(String idFranquicia, Producto producto) {
-        return null;
+    public Mono<Franquicia> agregarProducto(String idFranquicia, String idSucursal, Producto producto) {
+        return franquiciaRepository.buscarFranquiciaById(idFranquicia)
+                .map(franquicia -> {
+                    franquicia.getSucursales().stream().filter(sucursal -> sucursal.getId().equals(idSucursal)).findFirst().ifPresent(sucursal -> sucursal.getProductos().add(producto));
+                    return franquicia;
+                })
+                .flatMap(franquiciaRepository::guardarFranquicia);
     }
 
     @Override

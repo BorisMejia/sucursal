@@ -83,16 +83,16 @@ public class FranquiciaServiceImpl implements FranquiciaService {
 
     @Override
     public Mono<Franquicia> obtenerFranquiciaById(String idFranquicia) {
-        return null;
+        return franquiciaRepository.buscarFranquiciaById(idFranquicia);
     }
 
     @Override
     public Flux<Franquicia> obtenerTodasFranquicias() {
-        return null;
+        return franquiciaRepository.buscarTodasFranquicias();
     }
 
     @Override
     public Mono<Void> eliminarFranquicia(String idFranquicia) {
-        return null;
+        return franquiciaRepository.eliminarFranquicia(idFranquicia);
     }
 }

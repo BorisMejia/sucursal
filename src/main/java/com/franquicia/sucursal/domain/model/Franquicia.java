@@ -14,8 +14,8 @@ public class Franquicia {
     private String nombre;
     private final List<Sucursal> sucursales;
 
-    public Franquicia(String nombre) {
-        this.id = UUID.randomUUID().toString();
+    public Franquicia(String id, String nombre) {
+        this.id = id;
         this.nombre = nombre;
         this.sucursales = new ArrayList<>();
     }
@@ -24,6 +24,13 @@ public class Franquicia {
         this.id = id;
         this.nombre = nombre;
         this.sucursales = sucursales;
+    }
+
+    public void agregarSucursal(Sucursal nueva) {
+        if (sucursales.stream().anyMatch(s -> s.getId().equals(nueva.getId()))) {
+            throw new IllegalArgumentException("Ya existe una sucursal con ID: " + nueva.getId());
+        }
+        this.sucursales.add(nueva);
     }
 
     public String getId() {
@@ -42,10 +49,6 @@ public class Franquicia {
         return sucursales;
     }
 
-    public void agregarSucursal(Sucursal sucursal) {
-        this.sucursales.add(sucursal);
-    }
-
     public void eliminarSucursal(String idSucursal) {
         this.sucursales.removeIf(s -> s.getId().equals(idSucursal));
     }
@@ -55,5 +58,10 @@ public class Franquicia {
                 .filter(s -> s.getId().equals(idSucursal))
                 .findFirst()
                 .orElse(null);
+    }
+    public Franquicia() {
+        this.id = null;
+        this.nombre = null;
+        this.sucursales = new ArrayList<>();
     }
 }

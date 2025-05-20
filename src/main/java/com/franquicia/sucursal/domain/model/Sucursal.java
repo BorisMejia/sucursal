@@ -15,8 +15,8 @@ public class Sucursal {
     private String nombre;
     private final List<Producto> productos;
 
-    public Sucursal(String nombre) {
-        this.id = UUID.randomUUID().toString();
+    public Sucursal(String id, String nombre) {
+        this.id = id;
         this.nombre = nombre;
         this.productos = new ArrayList<>();
     }
@@ -25,6 +25,13 @@ public class Sucursal {
         this.id = id;
         this.nombre = nombre;
         this.productos = productos;
+    }
+
+    public void agregarProducto(Producto nuevo) {
+        if (productos.stream().anyMatch(p -> p.getId().equals(nuevo.getId()))) {
+            throw new IllegalArgumentException("Ya existe un producto con ID: " + nuevo.getId());
+        }
+        this.productos.add(nuevo);
     }
 
     public String getId() {
@@ -43,10 +50,6 @@ public class Sucursal {
         return productos;
     }
 
-    public void agregarProducto(Producto producto) {
-        this.productos.add(producto);
-    }
-
     public void eliminarProducto(String idProducto) {
         this.productos.removeIf(p -> p.getId().equals(idProducto));
     }
@@ -57,4 +60,10 @@ public class Sucursal {
                 .findFirst()
                 .orElse(null);
     }
+    public Sucursal() {
+        this.id = null;
+        this.nombre = null;
+        this.productos = new ArrayList<>();
+    }
+
 }

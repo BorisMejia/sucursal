@@ -12,12 +12,6 @@ public class Producto {
     private String nombreProducto;
     private int stock;
 
-    public Producto(String nombreProducto, int stock) {
-        this.id = UUID.randomUUID().toString();
-        this.nombreProducto = nombreProducto;
-        this.stock = stock;
-    }
-
     public Producto(String id, String nombreProducto, int stock) {
         this.id = id;
         this.nombreProducto = nombreProducto;
@@ -43,4 +37,10 @@ public class Producto {
     public void setStock(int stock) {
         this.stock = stock;
     }
+    public Producto() {
+        this.id = null;
+        this.nombreProducto = null;
+        this.stock = 0;
+    }
+
 }

@@ -6,12 +6,16 @@ import com.franquicia.sucursal.application.dto.franquicia.response.SucursalRespo
 import com.franquicia.sucursal.domain.model.Franquicia;
 import com.franquicia.sucursal.domain.model.Producto;
 import com.franquicia.sucursal.domain.model.Sucursal;
+import com.franquicia.sucursal.infra.driven.mongo.mapper.FranquiciaMapper;
 import org.mapstruct.Mapper;
+import org.mapstruct.factory.Mappers;
 
 import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface FranquiciaDtoMapper {
+
+    FranquiciaDtoMapper INSTANCE = Mappers.getMapper(FranquiciaDtoMapper.class);
 
     FranquiciaResponseDto toDto(Franquicia franquicia);
 

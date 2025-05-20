@@ -15,7 +15,7 @@ import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface FranquiciaMapper {
-    FranquiciaMapper INSTANCE = Mappers.getMapper(FranquiciaMapper.class);
+    FranquiciaMapper INSTANCE2 = Mappers.getMapper(FranquiciaMapper.class);
 
     @Mappings({
             @Mapping(source = "id", target = "id"),

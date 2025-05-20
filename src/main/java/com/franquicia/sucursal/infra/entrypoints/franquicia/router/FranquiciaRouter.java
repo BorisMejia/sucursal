@@ -17,8 +17,6 @@ public class FranquiciaRouter {
     @Bean
     public RouterFunction<ServerResponse> routeFranquicia(FranquiciaHandler handler){
         return RouterFunctions
-                .nest(path("/franquicias"),
-                RouterFunctions.route(POST("/"), handler::crearFranquicia)
-        );
+                .route(POST("/franquicias"), handler::crearFranquicia);
     }
 }

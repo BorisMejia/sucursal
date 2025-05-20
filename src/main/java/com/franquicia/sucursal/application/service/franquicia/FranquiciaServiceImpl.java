@@ -19,26 +19,42 @@ import java.util.Optional;
 public class FranquiciaServiceImpl implements FranquiciaService {
 
     private final FranquiciaRepository franquiciaRepository;
+
     @Override
-    public Mono<Franquicia> crearFranquicia(Franquicia franquicia) {
-        return franquiciaRepository.guardarFranquicia(franquicia);
+    public Mono<Franquicia> crearFranquicia(String idFranquicia, String nombreFranquicia) {
+        return franquiciaRepository.buscarFranquiciaById(idFranquicia)
+                .flatMap(existing -> Mono.<Franquicia>error(new IllegalArgumentException("Ya existe una franquicia con el ID: " + idFranquicia)))
+                .switchIfEmpty(franquiciaRepository.guardarFranquicia(new Franquicia(idFranquicia, nombreFranquicia)));
     }
 
     @Override
-    public Mono<Franquicia> agregarSucursal(String idFranquicia, Sucursal sucursal) {
+    public Flux<Franquicia> obtenerTodasLasFranquicias() {
+        return franquiciaRepository.buscarTodasFranquicias();
+    }
+
+    @Override
+    public Mono<Franquicia> obtenerFranquiciaPorId(String idFranquicia) {
+        return franquiciaRepository.buscarFranquiciaById(idFranquicia);
+    }
+
+    @Override
+    public Mono<Franquicia> agregarSucursal(String idFranquicia, String idSucursal, String nombreSucursal) {
         return franquiciaRepository.buscarFranquiciaById(idFranquicia)
                 .map(franquicia -> {
-                    franquicia.getSucursales().add(sucursal);
+                    franquicia.agregarSucursal(new Sucursal(idSucursal, nombreSucursal));
                     return franquicia;
                 })
                 .flatMap(franquiciaRepository::guardarFranquicia);
     }
 
     @Override
-    public Mono<Franquicia> agregarProducto(String idFranquicia, String idSucursal, Producto producto) {
+    public Mono<Franquicia> agregarProducto(String idFranquicia, String idSucursal, String idProducto, String nombreProducto, Integer stock) {
         return franquiciaRepository.buscarFranquiciaById(idFranquicia)
                 .map(franquicia -> {
-                    franquicia.getSucursales().stream().filter(sucursal -> sucursal.getId().equals(idSucursal)).findFirst().ifPresent(sucursal -> sucursal.getProductos().add(producto));
+                    Sucursal sucursal = franquicia.obtenerSucursalPorId(idSucursal);
+                    if (sucursal != null) {
+                        sucursal.agregarProducto(new Producto(idProducto, nombreProducto, stock));
+                    }
                     return franquicia;
                 })
                 .flatMap(franquiciaRepository::guardarFranquicia);
@@ -48,51 +64,84 @@ public class FranquiciaServiceImpl implements FranquiciaService {
     public Mono<Franquicia> eliminarProducto(String idFranquicia, String idSucursal, String idProducto) {
         return franquiciaRepository.buscarFranquiciaById(idFranquicia)
                 .map(franquicia -> {
-                    franquicia.getSucursales().stream()
-                            .filter(sucursal -> sucursal.getId().equals(idSucursal))
-                            .findFirst()
-                            .ifPresent(sucursal -> sucursal.getProductos().removeIf(producto -> producto.getId().equals(idProducto)));
+                    Sucursal sucursal = franquicia.obtenerSucursalPorId(idSucursal);
+                    if (sucursal != null) {
+                        sucursal.eliminarProducto(idProducto);
+                    }
                     return franquicia;
                 })
                 .flatMap(franquiciaRepository::guardarFranquicia);
     }
 
     @Override
-    public Mono<Franquicia> modificarStockProducto(String idFranquicia, String idSucursal, String idProducto, Integer newStock) {
+    public Mono<Franquicia> actualizarStockProducto(String idFranquicia, String idSucursal, String idProducto, Integer nuevoStock) {
         return franquiciaRepository.buscarFranquiciaById(idFranquicia)
                 .map(franquicia -> {
-                    franquicia.getSucursales().stream().filter(sucursal -> sucursal.getId().equals(idSucursal))
-                            .findFirst().ifPresent(sucursal -> sucursal.getProductos().stream().filter(producto -> producto.getId().equals(idProducto)).findFirst().ifPresent(producto -> producto.setStock(newStock)));
+                    Sucursal sucursal = franquicia.obtenerSucursalPorId(idSucursal);
+                    if (sucursal != null) {
+                        Producto producto = sucursal.obtenerProductoPorId(idProducto);
+                        if (producto != null) {
+                            producto.setStock(nuevoStock);
+                        }
+                    }
                     return franquicia;
                 })
                 .flatMap(franquiciaRepository::guardarFranquicia);
     }
 
     @Override
-    public Flux<ProductoSucursalDto> obtenerProductosConMasStockSucursal(String idFranquicia) {
+    public Flux<String> obtenerProductosConMayorStockPorSucursal(String idFranquicia) {
         return franquiciaRepository.buscarFranquiciaById(idFranquicia)
-                .flatMapMany(franquicia -> Flux.fromIterable(franquicia.getSucursales()))
-                .map(sucursal -> {
-                    Optional<Producto> mayorCantidad = sucursal.getProductos().stream()
-                            .max(Comparator.comparingInt(Producto::getStock));
-                    return mayorCantidad.map(producto -> new ProductoSucursalDto(sucursal.getId(), producto));
+                .flatMapMany(franquicia ->
+                        Flux.fromIterable(franquicia.getSucursales())
+                                .flatMap(sucursal -> Flux.fromIterable(sucursal.getProductos())
+                                        .sort(Comparator.comparingInt(Producto::getStock).reversed())
+                                        .take(1)
+                                        .map(producto ->
+                                                "Sucursal: " + sucursal.getNombre() +
+                                                        ", Producto: " + producto.getNombreProducto() +
+                                                        ", Stock: " + producto.getStock()
+                                        )
+                                )
+                );
+    }
+
+    @Override
+    public Mono<Franquicia> actualizarNombreFranquicia(String idFranquicia, String nuevoNombre) {
+        return franquiciaRepository.buscarFranquiciaById(idFranquicia)
+                .map(franquicia -> {
+                    franquicia.setNombre(nuevoNombre);
+                    return franquicia;
                 })
-                .filter(Optional::isPresent)
-                .map(Optional::get);
+                .flatMap(franquiciaRepository::guardarFranquicia);
     }
 
     @Override
-    public Mono<Franquicia> obtenerFranquiciaById(String idFranquicia) {
-        return franquiciaRepository.buscarFranquiciaById(idFranquicia);
+    public Mono<Franquicia> actualizarNombreSucursal(String idFranquicia, String idSucursal, String nuevoNombre) {
+        return franquiciaRepository.buscarFranquiciaById(idFranquicia)
+                .map(franquicia -> {
+                    Sucursal sucursal = franquicia.obtenerSucursalPorId(idSucursal);
+                    if (sucursal != null) {
+                        sucursal.setNombre(nuevoNombre);
+                    }
+                    return franquicia;
+                })
+                .flatMap(franquiciaRepository::guardarFranquicia);
     }
 
     @Override
-    public Flux<Franquicia> obtenerTodasFranquicias() {
-        return franquiciaRepository.buscarTodasFranquicias();
-    }
-
-    @Override
-    public Mono<Void> eliminarFranquicia(String idFranquicia) {
-        return franquiciaRepository.eliminarFranquicia(idFranquicia);
+    public Mono<Franquicia> actualizarNombreProducto(String idFranquicia, String idSucursal, String idProducto, String nuevoNombre) {
+        return franquiciaRepository.buscarFranquiciaById(idFranquicia)
+                .map(franquicia -> {
+                    Sucursal sucursal = franquicia.obtenerSucursalPorId(idSucursal);
+                    if (sucursal != null) {
+                        Producto producto = sucursal.obtenerProductoPorId(idProducto);
+                        if (producto != null) {
+                            producto.setNombreProducto(nuevoNombre);
+                        }
+                    }
+                    return franquicia;
+                })
+                .flatMap(franquiciaRepository::guardarFranquicia);
     }
 }

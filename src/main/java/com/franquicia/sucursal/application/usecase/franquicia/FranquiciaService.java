@@ -9,19 +9,25 @@ import reactor.core.publisher.Mono;
 
 public interface FranquiciaService {
 
-    Mono<Franquicia> crearFranquicia(Franquicia franquicia);
+    Mono<Franquicia> crearFranquicia(String idFranquicia, String nombreFranquicia);
 
-    Mono<Franquicia> agregarSucursal(String idFranquicia, Sucursal sucursal);
+    Flux<Franquicia> obtenerTodasLasFranquicias();
 
-    Mono<Franquicia> agregarProducto(String idFranquicia, String idSucursal, Producto producto);
-    Mono<Franquicia> eliminarProducto(String idFranquicia,String idSucursal, String idProducto);
+    Mono<Franquicia> obtenerFranquiciaPorId(String idFranquicia);
 
-    Mono<Franquicia> modificarStockProducto(String idFranquicia, String idSucursal, String idProducto, Integer newStock);
+    Mono<Franquicia> agregarSucursal(String idFranquicia, String idSucursal, String nombreSucursal);
 
-    Flux<ProductoSucursalDto> obtenerProductosConMasStockSucursal(String idFranquicia);
+    Mono<Franquicia> agregarProducto(String idFranquicia, String idSucursal, String idProducto, String nombreProducto, Integer stock);
 
-    Mono<Franquicia> obtenerFranquiciaById(String idFranquicia);
+    Mono<Franquicia> eliminarProducto(String idFranquicia, String idSucursal, String idProducto);
 
-    Flux<Franquicia> obtenerTodasFranquicias();
-    Mono<Void> eliminarFranquicia(String idFranquicia);
+    Mono<Franquicia> actualizarStockProducto(String idFranquicia, String idSucursal, String idProducto, Integer nuevoStock);
+
+    Flux<String> obtenerProductosConMayorStockPorSucursal(String idFranquicia);
+
+    Mono<Franquicia> actualizarNombreFranquicia(String idFranquicia, String nuevoNombre);
+
+    Mono<Franquicia> actualizarNombreSucursal(String idFranquicia, String idSucursal, String nuevoNombre);
+
+    Mono<Franquicia> actualizarNombreProducto(String idFranquicia, String idSucursal, String idProducto, String nuevoNombre);
 }

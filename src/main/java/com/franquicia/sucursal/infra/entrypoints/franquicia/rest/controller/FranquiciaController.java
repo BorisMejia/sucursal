@@ -1,9 +1,7 @@
 package com.franquicia.sucursal.infra.entrypoints.franquicia.rest.controller;
 
 import com.franquicia.sucursal.application.dto.franquicia.mapper.FranquiciaDtoMapper;
-import com.franquicia.sucursal.application.dto.franquicia.request.FranquiciaRequestDto;
-import com.franquicia.sucursal.application.dto.franquicia.request.ProductoRequestDto;
-import com.franquicia.sucursal.application.dto.franquicia.request.SucursalRequestDto;
+import com.franquicia.sucursal.application.dto.franquicia.request.*;
 import com.franquicia.sucursal.application.dto.franquicia.response.FranquiciaResponseDto;
 import com.franquicia.sucursal.application.usecase.franquicia.FranquiciaService;
 import com.franquicia.sucursal.domain.model.Franquicia;
@@ -47,7 +45,7 @@ public class FranquiciaController {
     @PutMapping("/{idFranquicia}/nombre")
     public Mono<FranquiciaResponseDto> actualizarNombreFranquicia(
             @PathVariable String idFranquicia,
-            @RequestBody FranquiciaRequestDto dto) {
+            @RequestBody @Valid ActualizarNombreFranquiciaRequestDto dto) {
         return franquiciaService.actualizarNombreFranquicia(idFranquicia, dto.nombre())
                 .map(mapper::toDto);
     }
@@ -56,7 +54,7 @@ public class FranquiciaController {
     public Mono<FranquiciaResponseDto> actualizarNombreSucursal(
             @PathVariable String idFranquicia,
             @PathVariable String idSucursal,
-            @RequestBody SucursalRequestDto dto) {
+            @RequestBody @Valid ActualizarNombreSucursalDto dto) {
         return franquiciaService.actualizarNombreSucursal(idFranquicia, idSucursal, dto.nombre())
                 .map(mapper::toDto);
     }
@@ -75,8 +73,9 @@ public class FranquiciaController {
             @PathVariable String idFranquicia,
             @PathVariable String idSucursal,
             @PathVariable String idProducto,
-            @RequestBody ProductoRequestDto dto) {
-        return franquiciaService.actualizarNombreProducto(idFranquicia, idSucursal, idProducto, dto.nombreProducto())
+            @RequestBody @Valid ActualizarNombreProductoRequestDto request) {
+        return franquiciaService
+                .actualizarNombreProducto(idFranquicia, idSucursal, idProducto, request.nombreProducto())
                 .map(mapper::toDto);
     }
 
@@ -85,8 +84,9 @@ public class FranquiciaController {
             @PathVariable String idFranquicia,
             @PathVariable String idSucursal,
             @PathVariable String idProducto,
-            @RequestBody ProductoRequestDto dto) {
-        return franquiciaService.actualizarStockProducto(idFranquicia, idSucursal, idProducto, dto.stock())
+            @RequestBody @Valid ActualizarStockRequestDto request) {
+        return franquiciaService
+                .actualizarStockProducto(idFranquicia, idSucursal, idProducto, request.stock())
                 .map(mapper::toDto);
     }
 

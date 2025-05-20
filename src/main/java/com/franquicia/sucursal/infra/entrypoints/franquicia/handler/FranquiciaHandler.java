@@ -1,5 +1,6 @@
 package com.franquicia.sucursal.infra.entrypoints.franquicia.handler;
 
+import com.franquicia.sucursal.application.dto.franquicia.ProductoSucursalDto;
 import com.franquicia.sucursal.application.usecase.franquicia.FranquiciaService;
 import com.franquicia.sucursal.domain.model.Franquicia;
 import com.franquicia.sucursal.domain.model.Producto;
@@ -64,13 +65,10 @@ public class FranquiciaHandler {
                         .contentType(MediaType.APPLICATION_JSON)
                         .bodyValue(updateStock));
     }
-    public Flux<ServerResponse> obtenerProductosConMayorStock(ServerRequest request){
+    public Mono<ServerResponse> obtenerProductosConMayorStock(ServerRequest request){
         String idSucursal = request.pathVariable("idSucursal");
-        return franquiciaService.obtenerProductosConMasStockSucursal(idSucursal)
-                .flatMap(productoSucursalDto -> ServerResponse
-                        .ok()
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .bodyValue(productoSucursalDto));
+        return ServerResponse.ok()
+                .body(franquiciaService.obtenerProductosConMasStockSucursal(idSucursal), ProductoSucursalDto.class);
     }
 
 

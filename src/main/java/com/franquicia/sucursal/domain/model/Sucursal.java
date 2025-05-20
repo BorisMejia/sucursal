@@ -11,9 +11,9 @@ import java.util.UUID;
 
 public class Sucursal {
 
-    private final String id;
+    private String id;
     private String nombre;
-    private final List<Producto> productos;
+    private List<Producto> productos;
 
     public Sucursal(String id, String nombre) {
         this.id = id;
@@ -66,4 +66,11 @@ public class Sucursal {
         this.productos = new ArrayList<>();
     }
 
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setProductos(List<Producto> productos) {
+        this.productos = productos;
+    }
 }

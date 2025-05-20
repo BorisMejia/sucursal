@@ -8,7 +8,7 @@ import java.util.UUID;
 
 public class Producto {
 
-    private final String id;
+    private String id;
     private String nombreProducto;
     private int stock;
 
@@ -43,4 +43,7 @@ public class Producto {
         this.stock = 0;
     }
 
+    public void setId(String id) {
+        this.id = id;
+    }
 }

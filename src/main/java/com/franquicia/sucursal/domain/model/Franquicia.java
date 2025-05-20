@@ -10,9 +10,9 @@ import java.util.UUID;
 
 public class Franquicia {
 
-    private final String id;
+    private String id;
     private String nombre;
-    private final List<Sucursal> sucursales;
+    private List<Sucursal> sucursales;
 
     public Franquicia(String id, String nombre) {
         this.id = id;
@@ -40,7 +40,6 @@ public class Franquicia {
     public String getNombre() {
         return nombre;
     }
-
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
@@ -63,5 +62,13 @@ public class Franquicia {
         this.id = null;
         this.nombre = null;
         this.sucursales = new ArrayList<>();
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setSucursales(List<Sucursal> sucursales) {
+        this.sucursales = sucursales;
     }
 }

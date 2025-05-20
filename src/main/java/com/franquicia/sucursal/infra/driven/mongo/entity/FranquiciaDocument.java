@@ -1,20 +1,22 @@
 package com.franquicia.sucursal.infra.driven.mongo.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
 
-@Getter
-@Setter
+@Document(collection = "franquicias")
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Document(collation = "franquicias")
+@Builder
 public class FranquiciaDocument {
-    private String idFranquicia;
-    private String nombreFranquicia;
+
+    @Id
+    private String id;
+
+    private String nombre;
+
     private List<SucursalDocument> sucursales;
 }

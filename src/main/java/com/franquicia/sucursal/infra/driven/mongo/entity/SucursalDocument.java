@@ -1,18 +1,16 @@
 package com.franquicia.sucursal.infra.driven.mongo.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.List;
 
-@Getter
-@Setter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class SucursalDocument {
-    private String idSucursal;
-    private String nombreSucursal;
+
+    private String id;
+    private String nombre;
     private List<ProductoDocument> productos;
 }

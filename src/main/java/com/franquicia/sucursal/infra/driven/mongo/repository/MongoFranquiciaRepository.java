@@ -5,5 +5,4 @@ import org.springframework.data.mongodb.repository.ReactiveMongoRepository;
 import reactor.core.publisher.Mono;
 
 public interface MongoFranquiciaRepository extends ReactiveMongoRepository<FranquiciaDocument, String> {
-    Mono<FranquiciaDocument> findById(String id);
 }

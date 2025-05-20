@@ -34,4 +34,9 @@ public class FranquiciaRepositoryImpl implements FranquiciaRepository {
     public Mono<Void> eliminarFranquicia(String id) {
         return mongoRepository.deleteById(id);
     }
+
+    @Override
+    public Mono<Franquicia> updateFranquicia(Franquicia franquicia) {
+        return guardarFranquicia(franquicia);
+    }
 }

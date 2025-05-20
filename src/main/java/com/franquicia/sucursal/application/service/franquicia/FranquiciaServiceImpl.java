@@ -1,6 +1,5 @@
 package com.franquicia.sucursal.application.service.franquicia;
 
-import com.franquicia.sucursal.application.dto.franquicia.ProductoSucursalDto;
 import com.franquicia.sucursal.application.usecase.franquicia.FranquiciaService;
 import com.franquicia.sucursal.domain.model.Franquicia;
 import com.franquicia.sucursal.domain.model.Producto;
@@ -12,7 +11,6 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.util.Comparator;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -33,7 +31,7 @@ public class FranquiciaServiceImpl implements FranquiciaService {
     }
 
     @Override
-    public Mono<Franquicia> obtenerFranquiciaPorId(String idFranquicia) {
+    public Mono<Franquicia> obtenerFranquiciaById(String idFranquicia) {
         return franquiciaRepository.buscarFranquiciaById(idFranquicia);
     }
 

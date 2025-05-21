@@ -34,7 +34,7 @@ cd sucursal
 ```
 ##  💾 Compilar y ejecutar los contenedores
 
->[!importan]
+>[!IMPORTANT]
 > Ejecutar el siguiente comando en la terminal bash
 
 ```bash
@@ -42,3 +42,7 @@ cd sucursal
 ```
 
 ## 💻 URL para peticiones http
+
+```bash
+http://localhost:8080/swagger-ui/swagger-ui/index.html#/
+```

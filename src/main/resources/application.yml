@@ -6,6 +6,7 @@ spring:
     name: franquicia-api
   data:
     mongodb:
+      #uri: ${SPRING_DATA_MONGODB_URI}
       uri: mongodb://root:secret@localhost:27017/franquicia-db?authSource=admin&authMechanism=SCRAM-SHA-256
   main:
     web-application-type: reactive

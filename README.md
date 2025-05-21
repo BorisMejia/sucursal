@@ -29,11 +29,16 @@ Antes de iniciar, asegúrate de tener instalado:
 ## 📦 Clonar el repositorio
 
 ```bash
-git clone https://github.com/tu-usuario/api-franquicias.git
-cd api-franquicias
+git clone https://github.com/BorisMejia/sucursal.git
+cd sucursal
+```
+##  💾 Compilar y ejecutar los contenedores
 
+>[!importan]
+> Ejecutar el siguiente comando en la terminal bash
 
-
-
+```bash
 ./mvnw clean package -DskipTests && docker-compose build --no-cache && docker-compose up
+```
 
+## 💻 URL para peticiones http

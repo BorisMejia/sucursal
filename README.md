@@ -31,9 +31,12 @@ Antes de iniciar, asegúrate de tener instalado:
 ```bash
 git clone https://github.com/BorisMejia/sucursal.git
 ```
+
 ```bash
 cd sucursal
 ```
+<img src="docs/img/GIT-CLONE.png" alt="POST /franquicias" width="700"/>
+
 ##  💾 Compilar y ejecutar los contenedores
 
 >[!IMPORTANT]
@@ -42,6 +45,12 @@ cd sucursal
 ```bash
 ./mvnw clean package -DskipTests && docker-compose build --no-cache && docker-compose up
 ```
+
+<img src="docs/img/RUN.png" alt="POST /franquicias" width="700"/>
+
+## 🐋 Esperar que corrar los contenedores
+
+<img src="docs/img/DOCKER.png" alt="POST /franquicias" width="700"/>
 
 ## 💻 URL para peticiones http
 

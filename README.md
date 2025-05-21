@@ -40,13 +40,24 @@ cd sucursal
 ##  💾 Compilar y ejecutar los contenedores
 
 >[!IMPORTANT]
-> Ejecutar el siguiente comando en la terminal bash
+> Ejecutar el siguiente comando en la terminal bash si se tiene java en el equipo
 
 ```bash
 ./mvnw clean package -DskipTests && docker-compose build --no-cache && docker-compose up
 ```
 
 <img src="docs/img/RUN.png" alt="POST /franquicias" width="700"/>
+
+>[!IMPORTANT]
+>Ejecutar el siguiente comando si no se tiene java
+
+>[!NOTE]
+>Se debe tener docker instalado
+
+```bash
+docker-compose up --build -d
+```
+
 
 ## 🐋 Esperar que corrar los contenedores
 

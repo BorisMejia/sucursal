@@ -35,7 +35,7 @@ Antes de iniciar, asegúrate de tener instalado:
 >borisfernandez916@gmail.com
 
 ```bash
-http://54.183.216.78:8080/swagger-ui/swagger-ui/index.html#/
+http://13.52.23.84:8080/swagger-ui/swagger-ui/index.html#/
 ```
 
 ---

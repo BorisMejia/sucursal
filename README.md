@@ -210,7 +210,7 @@ Sucursal: Sucursal uno, Producto: Producto tres, Stock: 100Sucursal: Sucursal do
 <img src="docs/img/TODAS-FRANQUICIAS.png" alt="POST /franquicias" width="700"/>
 
 ```json
-PUT /franquicias/{idFranquicia}/sucursales/{idSucursal}/productos/{idProducto}
+GET /franquicias
 Body:
 {
 [

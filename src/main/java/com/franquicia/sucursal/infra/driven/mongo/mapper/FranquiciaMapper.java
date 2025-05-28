@@ -17,46 +17,46 @@ import java.util.List;
 public interface FranquiciaMapper {
     FranquiciaMapper INSTANCE2 = Mappers.getMapper(FranquiciaMapper.class);
 
-//    @Mappings({
-//            @Mapping(source = "id", target = "id"),
-//            @Mapping(source = "nombre", target = "nombre"),
-//            @Mapping(source = "sucursales", target = "sucursales")
-//    })
+    @Mappings({
+            @Mapping(source = "id", target = "id"),
+            @Mapping(source = "nombre", target = "nombre"),
+            @Mapping(source = "sucursales", target = "sucursales")
+    })
     FranquiciaDocument toDocument(Franquicia franquicia);
-//    @Mappings({
-//            @Mapping(source = "id", target = "id"),
-//            @Mapping(source = "nombre", target = "nombre"),
-//            @Mapping(source = "sucursales", target = "sucursales")
-//    })
+    @Mappings({
+            @Mapping(source = "id", target = "id"),
+            @Mapping(source = "nombre", target = "nombre"),
+            @Mapping(source = "sucursales", target = "sucursales")
+    })
     Franquicia toDomain(FranquiciaDocument document);
 
 
-//    @Mappings({
-//            @Mapping(source = "id", target = "id"),
-//            @Mapping(source = "nombre", target = "nombre"),
-//            @Mapping(source = "productos", target = "productos")
-//    })
+    @Mappings({
+            @Mapping(source = "id", target = "id"),
+            @Mapping(source = "nombre", target = "nombre"),
+            @Mapping(source = "productos", target = "productos")
+    })
     SucursalDocument toDocument(Sucursal sucursal);
-//    @Mappings({
-//            @Mapping(source = "id", target = "id"),
-//            @Mapping(source = "nombre", target = "nombre"),
-//            @Mapping(source = "productos", target = "productos")
-//    })
+    @Mappings({
+            @Mapping(source = "id", target = "id"),
+            @Mapping(source = "nombre", target = "nombre"),
+            @Mapping(source = "productos", target = "productos")
+    })
     Sucursal toDomain(SucursalDocument document);
 
 
-//    @Mappings({
-//            @Mapping(source = "id", target = "id"),
-//            @Mapping(source = "nombreProducto", target = "nombreProducto"),
-//            @Mapping(source = "stock", target = "stock")
-//    })
+    @Mappings({
+            @Mapping(source = "id", target = "id"),
+            @Mapping(source = "nombreProducto", target = "nombreProducto"),
+            @Mapping(source = "stock", target = "stock")
+    })
     ProductoDocument toDocument(Producto producto);
 
-//    @Mappings({
-//            @Mapping(source = "id", target = "id"),
-//            @Mapping(source = "nombreProducto", target = "nombreProducto"),
-//            @Mapping(source = "stock", target = "stock")
-//    })
+    @Mappings({
+            @Mapping(source = "id", target = "id"),
+            @Mapping(source = "nombreProducto", target = "nombreProducto"),
+            @Mapping(source = "stock", target = "stock")
+    })
     Producto toDomain(ProductoDocument document);
 
     List<Franquicia> toDomainList(List<FranquiciaDocument> documents);
